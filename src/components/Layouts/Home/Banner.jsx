@@ -36,8 +36,8 @@ const Banner = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="container mx-auto p-4 py-6 bg-gray-200">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:px-10">
         {/* Main Slider */}
         <div className="md:col-span-2 relative">
           <div className="bg-purple-900 rounded-2xl p-8 relative overflow-hidden min-h-[400px]">

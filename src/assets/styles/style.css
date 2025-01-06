@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Menghilangkan scrollbar sepenuhnya di layar tablet */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Aktifkan kembali pada desktop */
+/* @media (min-width: 1024px) {
+  .hide-scrollbar {
+    -ms-overflow-style: auto;
+    scrollbar-width: auto;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: block;
+  }
+} */
