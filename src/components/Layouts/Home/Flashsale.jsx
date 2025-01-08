@@ -1,8 +1,144 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AlarmClock, Heart, ChevronRight, ChevronLeft } from "lucide-react";
 
 const Flashsale = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [visibleProducts, setVisibleProducts] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [countdown, setCountdown] = useState({
+    days: 3,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  const products = [
+    {
+      id: 1,
+      name: "Laptop",
+      discount: "-41%",
+      price: "$555",
+      originalPrice: "$899",
+      sold: "56/100",
+      reviews: 200,
+    },
+    {
+      id: 2,
+      name: "Phone",
+      discount: "-30%",
+      price: "$299",
+      originalPrice: "$399",
+      sold: "40/100",
+      reviews: 150,
+    },
+    {
+      id: 3,
+      name: "Headphones",
+      discount: "-20%",
+      price: "$99",
+      originalPrice: "$125",
+      sold: "25/50",
+      reviews: 80,
+    },
+    {
+      id: 4,
+      name: "Camera",
+      discount: "-35%",
+      price: "$450",
+      originalPrice: "$699",
+      sold: "30/80",
+      reviews: 90,
+    },
+  ];
+
+  // Handle countdown timer
+  useEffect(() => {
+    const getInitialTime = () => {
+      const savedEndTime = localStorage.getItem("flashSaleEndTime");
+      if (savedEndTime) {
+        const remaining = parseInt(savedEndTime) - Date.now();
+        if (remaining > 0) {
+          return parseInt(savedEndTime);
+        }
+      }
+      // Set new end time (current time + 3 days)
+      const newEndTime = Date.now() + 3 * 24 * 60 * 60 * 1000;
+      localStorage.setItem("flashSaleEndTime", newEndTime.toString());
+      return newEndTime;
+    };
+
+    const endTime = getInitialTime();
+
+    const updateCountdown = () => {
+      const now = Date.now();
+      const remaining = endTime - now;
+
+      if (remaining <= 0) {
+        // Reset timer when it reaches zero
+        localStorage.removeItem("flashSaleEndTime");
+        const newEndTime = Date.now() + 3 * 24 * 60 * 60 * 1000;
+        localStorage.setItem("flashSaleEndTime", newEndTime.toString());
+        return;
+      }
+
+      const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+
+      setCountdown({ days, hours, minutes, seconds });
+    };
+
+    const timer = setInterval(updateCountdown, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Handle window resize and set number of visible products
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // Update visible products whenever screen size or currentSlide changes
+  useEffect(() => {
+    const itemsToShow = isMobile ? 2 : 3;
+    const maxStartIndex = products.length - itemsToShow;
+
+    if (currentSlide > maxStartIndex) {
+      setCurrentSlide(maxStartIndex);
+    }
+
+    setVisibleProducts(
+      products.slice(currentSlide, currentSlide + itemsToShow)
+    );
+  }, [currentSlide, isMobile, products]);
+
+  const handlePrevSlide = () => {
+    const itemsToShow = isMobile ? 2 : 3;
+    setCurrentSlide((prev) =>
+      prev === 0 ? products.length - itemsToShow : prev - 1
+    );
+  };
+
+  const handleNextSlide = () => {
+    const itemsToShow = isMobile ? 2 : 3;
+    setCurrentSlide((prev) =>
+      prev >= products.length - itemsToShow ? 0 : prev + 1
+    );
+  };
+
+  const padNumber = (num) => String(num).padStart(2, "0");
 
   return (
     <div className="max-w-[90%] md:max-w-6xl mx-auto bg-white md:px-10 mt-10 mb-10">
@@ -14,22 +150,22 @@ const Flashsale = () => {
             Flash Sale
           </h1>
         </div>
-        <div className="flex flex-col md:flex-row">
-          <h1 className="text-sm md:text-base font-semibold text-gray-600 ">
-            Offers ends in :{" "}
+        <div className="flex flex-col md:flex-row items-start md:items-center">
+          <h1 className="text-sm md:text-base font-semibold text-gray-600">
+            Offers ends in:{" "}
           </h1>
           <div className="md:ml-2 space-x-2 mt-3 md:mt-0">
             <span className="text-base font-semibold text-white bg-orange-600 px-3 py-1 rounded">
-              00
+              {padNumber(countdown.days)}d
             </span>
             <span className="text-base font-semibold text-white bg-orange-600 px-3 py-1 rounded">
-              00
+              {padNumber(countdown.hours)}h
             </span>
             <span className="text-base font-semibold text-white bg-orange-600 px-3 py-1 rounded">
-              00
+              {padNumber(countdown.minutes)}m
             </span>
             <span className="text-base font-semibold text-white bg-orange-600 px-3 py-1 rounded">
-              00
+              {padNumber(countdown.seconds)}s
             </span>
           </div>
         </div>
@@ -55,63 +191,79 @@ const Flashsale = () => {
             <div className="text-8xl font-bold">12.12</div>
           </div>
 
-          {/* Product Cards */}
-          <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[...Array(3)].map((_, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-4">
-                <div className="bg-red-500 text-white text-sm px-2 py-0.5 rounded w-fit mb-2">
-                  -41%
-                </div>
+          {/* Product Cards Container */}
+          <div className="lg:w-2/3 relative">
+            {/* Product Cards Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {visibleProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="bg-white rounded-lg shadow-md p-4"
+                >
+                  <div className="bg-red-500 text-white text-sm px-2 py-0.5 rounded w-fit mb-2">
+                    {product.discount}
+                  </div>
 
-                <div className="relative mb-4">
-                  <img
-                    src=""
-                    alt="Product"
-                    className="w-full h-40 object-cover rounded-lg"
-                  />
-                  <button className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow">
-                    <Heart size={18} className="text-gray-400" />
+                  <div className="relative mb-4">
+                    <img
+                      src="/api/placeholder/400/320"
+                      alt={product.name}
+                      className="w-full h-40 object-cover rounded-lg"
+                    />
+                    <button className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow hover:bg-gray-100">
+                      <Heart size={18} className="text-gray-400" />
+                    </button>
+                  </div>
+                  <h3 className="font-medium text-sm mb-2 line-clamp-2">
+                    {product.name}
+                  </h3>
+                  <div className="flex flex-col md:flex-row md:items-center gap-1 mb-2">
+                    <div className="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <span key={i}>★</span>
+                      ))}
+                    </div>
+                    <span className="text-gray-500 text-sm">
+                      {product.reviews} reviews
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-blue-600 font-bold">
+                      {product.price}
+                    </span>
+                    <span className="text-gray-400 line-through text-sm">
+                      {product.originalPrice}
+                    </span>
+                  </div>
+                  <div className="text-sm text-gray-500 mb-4">
+                    Sold: {product.sold} products
+                  </div>
+                  <button className="w-full bg-blue-600 text-white py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                    Add To Cart
                   </button>
                 </div>
-                <h3 className="font-medium text-sm mb-2 line-clamp-2">
-                  Laptop
-                </h3>
-                <div className="flex items-center mb-2">
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i}>★</span>
-                    ))}
-                  </div>
-                  <span className="text-gray-500 text-sm ml-1">200 review</span>
-                </div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-blue-600 font-bold">$555</span>
-                  <span className="text-gray-400 line-through text-sm">
-                    $899
-                  </span>
-                </div>
-                <div className="text-sm text-gray-500 mb-4">
-                  Sold: 56/100 products
-                </div>
-                <button className="w-full bg-blue-600 text-white py-2 rounded-md text-sm font-medium hover:bg-blue-700">
-                  Add To Cart
+              ))}
+            </div>
+
+            {/* Navigation Arrows - Repositioned */}
+            {isHovered && (
+              <>
+                <button
+                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors z-10"
+                  onClick={handlePrevSlide}
+                >
+                  <ChevronLeft size={24} />
                 </button>
-              </div>
-            ))}
+                <button
+                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors z-10"
+                  onClick={handleNextSlide}
+                >
+                  <ChevronRight size={24} />
+                </button>
+              </>
+            )}
           </div>
         </div>
-
-        {/* Navigation Arrows - Only visible on hover */}
-        {isHovered && (
-          <>
-            <button className="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
-              <ChevronLeft size={24} />
-            </button>
-            <button className="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
-              <ChevronRight size={24} />
-            </button>
-          </>
-        )}
       </div>
     </div>
   );

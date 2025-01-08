@@ -65,7 +65,7 @@ const CardCategory = () => {
             behavior: "smooth",
           });
         }
-      }, 4000); // Scroll every 2 seconds
+      }, 4000);
     }
 
     return () => clearInterval(interval);
