@@ -1,6 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { AlarmClock, Heart, ChevronRight, ChevronLeft } from "lucide-react";
 
+const products = [
+  {
+    id: 1,
+    name: "Laptop",
+    discount: "-41%",
+    price: "$555",
+    originalPrice: "$899",
+    sold: "56/100",
+    reviews: 200,
+  },
+  {
+    id: 2,
+    name: "Phone",
+    discount: "-30%",
+    price: "$299",
+    originalPrice: "$399",
+    sold: "40/100",
+    reviews: 150,
+  },
+  {
+    id: 3,
+    name: "Headphones",
+    discount: "-20%",
+    price: "$99",
+    originalPrice: "$125",
+    sold: "25/50",
+    reviews: 80,
+  },
+  {
+    id: 4,
+    name: "Camera",
+    discount: "-35%",
+    price: "$450",
+    originalPrice: "$699",
+    sold: "30/80",
+    reviews: 90,
+  },
+];
+
 const Flashsale = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -12,45 +51,6 @@ const Flashsale = () => {
     minutes: 0,
     seconds: 0,
   });
-
-  const products = [
-    {
-      id: 1,
-      name: "Laptop",
-      discount: "-41%",
-      price: "$555",
-      originalPrice: "$899",
-      sold: "56/100",
-      reviews: 200,
-    },
-    {
-      id: 2,
-      name: "Phone",
-      discount: "-30%",
-      price: "$299",
-      originalPrice: "$399",
-      sold: "40/100",
-      reviews: 150,
-    },
-    {
-      id: 3,
-      name: "Headphones",
-      discount: "-20%",
-      price: "$99",
-      originalPrice: "$125",
-      sold: "25/50",
-      reviews: 80,
-    },
-    {
-      id: 4,
-      name: "Camera",
-      discount: "-35%",
-      price: "$450",
-      originalPrice: "$699",
-      sold: "30/80",
-      reviews: 90,
-    },
-  ];
 
   // Handle countdown timer
   useEffect(() => {
@@ -141,7 +141,7 @@ const Flashsale = () => {
   const padNumber = (num) => String(num).padStart(2, "0");
 
   return (
-    <div className="max-w-[95%] md:max-w-[95%] mx-auto bg-white md:px-10 mt-10 mb-10">
+    <div className="max-w-[90%] md:max-w-[90%] mx-auto bg-white md:px-10 mt-10 mb-10">
       {/* Header Flash Sale */}
       <div className="p-4 flex-1 md:flex items-center justify-between border-b-2 md:mb-2 border-orange-600">
         <div className="flex mb-1 md:mb-0">
@@ -249,16 +249,16 @@ const Flashsale = () => {
             {isHovered && (
               <>
                 <button
-                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors z-10"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors z-10"
                   onClick={handlePrevSlide}
                 >
-                  <ChevronLeft size={24} />
+                  <ChevronLeft size={16} />
                 </button>
                 <button
-                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors z-10"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors z-10"
                   onClick={handleNextSlide}
                 >
-                  <ChevronRight size={24} />
+                  <ChevronRight size={16} />
                 </button>
               </>
             )}
