@@ -131,7 +131,7 @@ const CardCategory = () => {
 
   return (
     <>
-      <div className="max-w-6xl mx-auto px-4 lg:px-8 mt-8">
+      <div className="max-w-[90%] md:max-w-7xl mx-auto px-4 lg:px-8 mt-8">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-xl md:text-2xl font-bold text-slate-800">
             Browse by Category

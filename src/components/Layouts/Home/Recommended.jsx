@@ -1,7 +1,7 @@
-import { Check, ChevronLeft, ChevronRight, Heart, Star } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import HeaderSection from "../../Elements/HeaderSection";
 import CardProduct from "../../Elements/CardProduct";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const products = [
   {
@@ -78,7 +78,7 @@ const products = [
   },
 ];
 
-const TopSelling = () => {
+const Recommended = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
@@ -130,47 +130,49 @@ const TopSelling = () => {
   };
 
   return (
-    <div className="max-w-[90%] md:max-w-7xl mx-auto md:px-10 mt-10 mb-10">
-      {/* Header */}
-      <HeaderSection title="Top Selling" subTitle="See All" />
+    <>
+      <div className="max-w-[90%] md:max-w-7xl mx-auto md:px-10 mt-10 mb-10">
+        {/* Header */}
+        <HeaderSection title="Recommended For You" subTitle="See All" />
 
-      {/* Cards Container with Overflow Hidden */}
-      <div className="relative mt-2">
-        <div className="overflow-hidden">
-          {/* Sliding Container */}
-          <div
-            className="flex transition-all duration-300 ease-in-out"
-            style={{
-              transform: `translateX(-${currentSlide * getItemWidth()}%)`,
-            }}
-          >
-            {visibleProducts.map((product, index) => (
-              <div
-                className="w-1/2 md:w-1/4 lg:w-1/6 flex-shrink-0 px-1"
-                key={index}
-              >
-                <CardProduct product={product} />
-              </div>
-            ))}
+        {/* Card Section */}
+        <div className="relative mt-2">
+          <div className="overflow-hidden">
+            {/* Sliding container */}
+            <div
+              className="flex transition-all duration-300 ease-in-out"
+              style={{
+                transform: `translateX(-${currentSlide * getItemWidth()}%)`,
+              }}
+            >
+              {visibleProducts.map((product, index) => (
+                <div
+                  className="w-1/2 md:w-1/4 lg:w-1/6 flex-shrink-0 px-1"
+                  key={index}
+                >
+                  <CardProduct product={product} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Arrow Navigation */}
-        <button
-          className="absolute top-1/2 -translate-y-1/2 left-0 p-2 -translate-x-4 bg-white rounded-full shadow hover:bg-gray-100 transition-all duration-200 hover:scale-110 z-10"
-          onClick={handlePrevSlide}
-        >
-          <ChevronLeft size={16} className="text-sm" />
-        </button>
-        <button
-          className="absolute top-1/2 -translate-y-1/2 right-0 p-2 translate-x-4 bg-white rounded-full shadow hover:bg-gray-100 transition-all duration-200 hover:scale-110 z-10"
-          onClick={handleNextSlide}
-        >
-          <ChevronRight size={16} />
-        </button>
+          {/* Arrow Navigation */}
+          <button
+            className="absolute top-1/2 -translate-y-1/2 left-0 p-2 -translate-x-4 bg-white rounded-full shadow hover:bg-gray-100 transition-all duration-200 hover:scale-110 z-10"
+            onClick={handlePrevSlide}
+          >
+            <ChevronLeft size={16} className="text-sm" />
+          </button>
+          <button
+            className="absolute top-1/2 -translate-y-1/2 right-0 p-2 translate-x-4 bg-white rounded-full shadow hover:bg-gray-100 transition-all duration-200 hover:scale-110 z-10"
+            onClick={handleNextSlide}
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default TopSelling;
+export default Recommended;

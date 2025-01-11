@@ -141,7 +141,7 @@ const Flashsale = () => {
   const padNumber = (num) => String(num).padStart(2, "0");
 
   return (
-    <div className="max-w-[90%] md:max-w-[90%] mx-auto bg-white md:px-10 mt-10 mb-10">
+    <div className="max-w-[90%] md:max-w-7xl mx-auto bg-white md:px-10 mt-10 mb-10">
       {/* Header Flash Sale */}
       <div className="p-4 flex-1 md:flex items-center justify-between border-b-2 md:mb-2 border-orange-600">
         <div className="flex mb-1 md:mb-0">

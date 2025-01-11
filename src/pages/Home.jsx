@@ -5,6 +5,7 @@ import Banner from "../components/Layouts/Home/Banner";
 import CardCategory from "../components/Layouts/Home/CardCategory";
 import Flashsale from "../components/Layouts/Home/Flashsale";
 import TopSelling from "../components/Layouts/Home/TopSelling";
+import Recommended from "../components/Layouts/Home/Recommended";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
           <CardCategory />
           <Flashsale />
           <TopSelling />
+          <Recommended />
         </main>
       <Footer />
     </>
