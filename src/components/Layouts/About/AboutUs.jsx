@@ -23,9 +23,9 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Hero Section with Parallax Effect */}
-      <section className="relative py-32 overflow-hidden bg-gradient-to-r from-indigo-600 to-purple-600">
+      {/* <section className="relative py-32 overflow-hidden bg-gradient-to-r from-indigo-600 to-purple-600">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxIDAgNiAyLjY5IDYgNnMtMi42OSA2LTYgNi02LTIuNjktNi02IDIuNjktNiA2LTZ6TTI0IDQ4YzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNnptMC0xMmMzLjMxIDAgNiAyLjY5IDYgNnMtMi42OSA2LTYgNi02LTIuNjktNi02IDIuNjktNiA2LTZ6Ii8+PC9nPjwvc3ZnPg==')] bg-repeat opacity-20"></div>
+          <div className="absolute inset-0 bg-repeat opacity-20"></div>
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
@@ -44,37 +44,10 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Stats Section with Animation */}
-      <section className="py-20 -mt-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { icon: Users, count: "1M+", label: "Pelanggan Aktif" },
-              { icon: Globe2, count: "34", label: "Provinsi Terjangkau" },
-              { icon: Trophy, count: "50+", label: "Penghargaan" },
-              { icon: Star, count: "4.9", label: "Rating Kepuasan" },
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className="transform hover:-translate-y-2 transition-all duration-300"
-              >
-                <div className="flex flex-col items-center p-8 bg-white rounded-xl shadow-lg hover:shadow-xl">
-                  <stat.icon className="w-12 h-12 text-indigo-600 mb-4" />
-                  <h3 className="text-3xl font-bold text-gray-900">
-                    {stat.count}
-                  </h3>
-                  <p className="text-gray-600">{stat.label}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      </section> */}
 
       {/* Core Values Section */}
-      <section className="py-20 bg-white">
+      {/* <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">
             Nilai-Nilai Utama Kami
@@ -112,10 +85,10 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Vision Mission Section with Modern Design */}
-      <section className="py-20 bg-gradient-to-b from-indigo-50 to-white">
+      {/* <section className="py-20 bg-gradient-to-b from-indigo-50 to-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             <div className="relative">
@@ -162,10 +135,10 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Team Section */}
-      <section className="py-20 bg-white">
+      {/* <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">
             Tim Kepemimpinan
@@ -205,10 +178,10 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Timeline Section with Modern Design */}
-      <section className="py-20 bg-gradient-to-b from-white to-indigo-50">
+      {/* <section className="py-20 bg-gradient-to-b from-white to-indigo-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">
             Perjalanan Kami
@@ -261,10 +234,10 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact Section */}
-      <section className="py-20 bg-white">
+      {/* <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">
             Hubungi Kami
@@ -305,7 +278,7 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

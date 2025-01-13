@@ -2,7 +2,12 @@ import React from "react";
 import Navbar from "../components/template/navbar/Navbar";
 import Footer from "../components/template/footer/footer";
 import Banner from "../components/Elements/Banner";
-import AboutUs from "../components/Layouts/About/AboutUs";
+import CardSection from "../components/Layouts/About/CardSection";
+import Explanation from "../components/Layouts/About/Explanation";
+import VisiMisi from "../components/Layouts/About/VisiMisi";
+import Reason from "../components/Layouts/About/Reason";
+import Questions from "../components/Layouts/About/Questions";
+import Team from "../components/Layouts/About/Team";
 
 const About = () => {
   return (
@@ -14,7 +19,12 @@ const About = () => {
         image="/public/img/banner.png"
       />
       <main>
-        <AboutUs />
+        <CardSection />
+        <Explanation />
+        <VisiMisi />
+        <Reason />
+        <Questions />
+        <Team />
       </main>
       <Footer />
     </>
