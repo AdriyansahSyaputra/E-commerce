@@ -50,20 +50,21 @@ const Team = () => {
 
   const nextSlide = () => {
     setCurrentIndex((prev) => {
-      const maxIndex = teams.length - slidesToShow;
+      const maxIndex = Math.ceil(teams.length / slidesToShow) - 1;
+
       return prev >= maxIndex ? 0 : prev + 1;
     });
   };
 
   const prevSlide = () => {
     setCurrentIndex((prev) => {
-      const maxIndex = teams.length - slidesToShow;
+      const maxIndex = Math.ceil(teams.length / slidesToShow) - 1;
       return prev <= 0 ? maxIndex : prev - 1;
     });
   };
 
   return (
-    <section className="py-16 px-4 bg-white">
+    <section className="py-16 mb-20 px-4 md:px-10 bg-white">
       {/* Header */}
       <div className="max-w-3xl mx-auto text-center mb-12">
         <span className="text-orange-600 font-semibold tracking-wider uppercase text-sm">
@@ -116,20 +117,22 @@ const Team = () => {
         </div>
 
         {/* Navigation Buttons */}
-        <button
-          onClick={prevSlide}
-          className="absolute top-1/2 -translate-y-1/2 -left-4 p-3 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-orange-500 z-10"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-6 h-6 text-gray-600" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute top-1/2 -translate-y-1/2 -right-4 p-3 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-orange-500 z-10"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-6 h-6 text-gray-600" />
-        </button>
+        <div className="lg:hidden">
+          <button
+            onClick={prevSlide}
+            className="absolute top-1/2 -translate-y-1/2 left-0 md:left-2 p-3 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-orange-500 z-10"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-600" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute top-1/2 -translate-y-1/2 right-0 md:right-2 p-3 bg-white rounded-full shadow-lg hover:bg-gray-50 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-orange-500 z-10"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-600" />
+          </button>
+        </div>
       </div>
     </section>
   );
