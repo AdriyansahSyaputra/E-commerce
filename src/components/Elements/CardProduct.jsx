@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Heart, Star, Check } from "lucide-react";
+import { Heart, Star, Check, X } from "lucide-react";
 
 const CardProduct = ({ product }) => {
   return (
@@ -36,10 +36,17 @@ const CardProduct = ({ product }) => {
           {product.price}
         </p>
 
-        <div className="flex items-center mb-4">
-          <Check size={15} className="text-green-500 mr-1" />
-          <span className="text-xs md:text-sm text-gray-500">In Stock</span>
-        </div>
+        {product.stock ? (
+          <div className="flex items-center mb-4">
+            <Check size={15} className="text-green-500 mr-1" />
+            <span className="text-xs md:text-sm text-gray-500">In Stock</span>
+          </div>
+        ) : (
+          <div className="flex items-center mb-4">
+            <X size={15} className="text-red-500 mr-1" />
+            <span className="text-xs md:text-sm text-red-500">Out Stock</span>
+          </div>
+        )}
       </div>
 
       <button className="w-full bg-blue-600 text-white py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-all duration-200">
