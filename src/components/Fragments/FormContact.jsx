@@ -2,7 +2,7 @@ import React from "react";
 
 const FormContact = () => {
   return (
-    <div className="max-w-xl">
+    <div className="max-w-2xl">
       <form action="">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* First Name */}
