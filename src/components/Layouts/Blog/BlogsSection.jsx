@@ -5,7 +5,7 @@ const BlogsSection = () => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {[...Array(4)].map((_, index) => (
+        {[...Array(6)].map((_, index) => (
           <CardBlog key={index} />
         ))}
       </div>

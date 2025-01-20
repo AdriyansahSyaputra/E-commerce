@@ -4,20 +4,37 @@ import Banner from "../components/Elements/Banner";
 import Footer from "../components/template/footer/footer";
 import BlogsSection from "../components/Layouts/Blog/BlogsSection";
 import TrendingBlog from "../components/Layouts/Blog/TrendingBlog";
+import Categories from "../components/Layouts/Blog/Categories";
 
 const Blog = () => {
+  return (
+    <>
+      <Navbar />
+      <Banner
+        image="/public/img/banner/about.jpg"
+        title="Our Blogs"
+        subtitle="Lorem ipsum dolor sit amet consectetur adipiscing elit turpis egestas libero, primis cursus vulputate commodo fames posuere torquent justo"
+      />
+      <main className="px-4 md:px-10 my-20">
+        {/* Mobile View */}
+        <div className="lg:hidden">
+          <Categories />
+          <TrendingBlog />
+          <BlogsSection />
+        </div>
 
-    return (
-        <>
-        <Navbar />
-        <Banner image="/public/img/banner/about.jpg" title="Contact Us" subtitle="Lorem ipsum dolor sit amet consectetur adipiscing elit turpis egestas libero, primis cursus vulputate commodo fames posuere torquent justo" />
-        <main className="px-4 md:px-10 md:flex my-20 md:gap-10">
-            <BlogsSection />
+        {/* Desktop View */}
+        <div className="hidden lg:flex md:gap-10">
+          <BlogsSection />
+          <div>
+            <Categories />
             <TrendingBlog />
-        </main>
-        <Footer />
-        </>
-    )
-}
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+};
 
 export default Blog;

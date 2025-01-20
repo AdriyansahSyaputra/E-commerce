@@ -23,7 +23,7 @@ const TrendingBlog = () => {
   ];
 
   return (
-    <aside className="min-w-80  p-4">
+    <aside className="min-w-80 p-4 mb-10 md:mb-0">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <h2 className="text-lg font-semibold text-slate-800">Trending News</h2>
