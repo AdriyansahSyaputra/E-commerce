@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import CardBlog from "../../Elements/CardBlog";
 
-const BlogsSection = () => {
+const BlogsSection = ({ articles }) => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {[...Array(6)].map((_, index) => (
-          <CardBlog key={index} />
-        ))}
+        <CardBlog articles={articles} />
       </div>
     </>
   );
 };
 
 export default BlogsSection;
+
+BlogsSection.propTypes = {
+  articles: PropTypes.array.isRequired,
+};

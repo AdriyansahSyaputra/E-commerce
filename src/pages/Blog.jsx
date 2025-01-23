@@ -5,6 +5,7 @@ import Footer from "../components/template/footer/footer";
 import BlogsSection from "../components/Layouts/Blog/BlogsSection";
 import TrendingBlog from "../components/Layouts/Blog/TrendingBlog";
 import Categories from "../components/Layouts/Blog/Categories";
+import articles from "../utils/articles";
 
 const Blog = () => {
   return (
@@ -19,16 +20,16 @@ const Blog = () => {
         {/* Mobile View */}
         <div className="lg:hidden">
           <Categories />
-          <TrendingBlog />
-          <BlogsSection />
+          <TrendingBlog articles={articles} />
+          <BlogsSection articles={articles} />
         </div>
 
         {/* Desktop View */}
         <div className="hidden lg:flex md:gap-10">
-          <BlogsSection />
+          <BlogsSection articles={articles} />
           <div>
             <Categories />
-            <TrendingBlog />
+            <TrendingBlog articles={articles} />
           </div>
         </div>
       </main>
