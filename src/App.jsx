@@ -5,6 +5,8 @@ import About from './pages/About'
 import Product from './pages/Product'
 import ContactUs from './pages/ContactUs'
 import Blog from './pages/Blog'
+import Login from './components/Layouts/Login/login'
+import LoginPage from './pages/LoginPage'
 
 function App() {
 
@@ -17,6 +19,7 @@ function App() {
           <Route path='/product' element={<Product />}></Route>
           <Route path='/contact' element={<ContactUs />}></Route>
           <Route path='/blog' element={<Blog />}></Route>
+          <Route path='/login' element={<LoginPage />}></Route>
         </Routes>
       </Router>
     </>
