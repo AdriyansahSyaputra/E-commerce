@@ -1,4 +1,6 @@
 import React from "react";
+import { CircleUser, Mail, Phone, NotebookPen } from "lucide-react";
+import InputLabel from "../Elements/Input/InputLabel";
 
 const FormContact = () => {
   return (
@@ -7,70 +9,46 @@ const FormContact = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* First Name */}
           <div className="relative">
-            <input
+            <InputLabel
+              icon={<CircleUser className="text-gray-400 w-5 h-5" />}
               type="text"
               id="firstName"
-              className="peer w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-50/30 text-gray-700 placeholder-transparent focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-all duration-300"
               placeholder="John"
-              required
+              label="First Name"
             />
-            <label
-              htmlFor="firstName"
-              className="absolute -top-2.5 left-3 text-sm bg-white px-2 text-gray-600 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-placeholder-shown:left-4 peer-focus:-top-2.5 peer-focus:left-3 peer-focus:text-sm peer-focus:text-indigo-600"
-            >
-              First Name
-            </label>
           </div>
 
           {/* Last Name */}
           <div className="relative">
-            <input
+            <InputLabel
+              icon={<CircleUser className="text-gray-400 w-5 h-5" />}
               type="text"
               id="lastName"
-              className="peer w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-50/30 text-gray-700 placeholder-transparent focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-all duration-300"
               placeholder="Doe"
-              required
+              label="Last Name"
             />
-            <label
-              htmlFor="lastName"
-              className="absolute -top-2.5 left-3 text-sm bg-white px-2 text-gray-600 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-placeholder-shown:left-4 peer-focus:-top-2.5 peer-focus:left-3 peer-focus:text-sm peer-focus:text-indigo-600"
-            >
-              Last Name
-            </label>
           </div>
 
           {/* Email */}
           <div className="relative">
-            <input
+            <InputLabel
+              icon={<Mail className="text-gray-400 w-5 h-5" />}
               type="email"
               id="email"
-              className="peer w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-50/30 text-gray-700 placeholder-transparent focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-all duration-300"
-              placeholder="email@example.com"
-              required
+              placeholder="p6o8O@example.com"
+              label="Email"
             />
-            <label
-              htmlFor="email"
-              className="absolute -top-2.5 left-3 text-sm bg-white px-2 text-gray-600 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-placeholder-shown:left-4 peer-focus:-top-2.5 peer-focus:left-3 peer-focus:text-sm peer-focus:text-indigo-600"
-            >
-              Email
-            </label>
           </div>
 
           {/* Phone */}
           <div className="relative">
-            <input
-              type="tel"
+            <InputLabel
+              icon={<Phone className="text-gray-400 w-5 h-5" />}
+              type="text"
               id="phone"
-              className="peer w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-50/30 text-gray-700 placeholder-transparent focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-all duration-300"
-              placeholder="+1234567890"
-              required
+              placeholder="123-456-7890"
+              label="Phone"
             />
-            <label
-              htmlFor="phone"
-              className="absolute -top-2.5 left-3 text-sm bg-white px-2 text-gray-600 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-placeholder-shown:left-4 peer-focus:-top-2.5 peer-focus:left-3 peer-focus:text-sm peer-focus:text-indigo-600"
-            >
-              Phone
-            </label>
           </div>
         </div>
 

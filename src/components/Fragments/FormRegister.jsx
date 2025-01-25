@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { CircleUser, Lock, Eye, EyeOff } from "lucide-react";
+import { CircleUser, Lock, Eye, EyeOff, Phone } from "lucide-react";
 import InputLabel from "../Elements/Input/InputLabel";
 
-const FormLogin = () => {
+const FormRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <>
@@ -16,6 +17,17 @@ const FormLogin = () => {
             id="email"
             placeholder="Email / Phone"
             label="Email"
+          />
+        </div>
+
+        {/* Phone Input */}
+        <div className="relative">
+          <InputLabel
+            icon={<Phone className="text-gray-400 w-5 h-5" />}
+            type="text"
+            id="phone"
+            placeholder="Phone"
+            label="Phone"
           />
         </div>
 
@@ -33,35 +45,34 @@ const FormLogin = () => {
             onClick={() => setShowPassword(!showPassword)}
             className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition"
           >
-            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
           </button>
         </div>
 
-        {/* Forgot Password */}
-        <div className="flex justify-between">
-          {/* Remember Me */}
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="rememberMe"
-              className="mr-2"
-            ></input>
-            <label htmlFor="rememberMe" className="text-sm text-gray-600">
-              Remember Me
-            </label>
-          </div>
-
-          <a href="#" className="text-sm text-blue-600 hover:underline">
-            Forgot Password?
-          </a>
+        {/* Confirm Password */}
+        <div className="relative">
+          <InputLabel
+            icon={<Lock className="text-gray-400 w-5 h-5" />}
+            type={showConfirmPassword ? "text" : "password"}
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            label="Confirm Password"
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition"
+          >
+            {showConfirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+          </button>
         </div>
 
-        {/* Login Button */}
+        {/* Register Button */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-lg hover:opacity-90 transition duration-300 flex items-center justify-center font-medium"
         >
-          Login
+          Sign Up
         </button>
 
         {/* Divider */}
@@ -73,7 +84,7 @@ const FormLogin = () => {
           <span className="flex-grow border-t border-gray-300"></span>
         </div>
 
-        {/* Social Login Buttons */}
+        {/* Social Register Buttons */}
         <div className="space-y-4">
           <button
             type="button"
@@ -91,9 +102,12 @@ const FormLogin = () => {
         {/* Sign Up Option */}
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
-            Don{"'"}t have an account?{" "}
-            <a href="#" className="text-blue-600 font-semibold hover:underline">
-              Sign Up
+            Have an account?
+            <a
+              href="#"
+              className="ml-1 text-blue-600 font-semibold hover:underline"
+            >
+              Login
             </a>
           </p>
         </div>
@@ -102,4 +116,4 @@ const FormLogin = () => {
   );
 };
 
-export default FormLogin;
+export default FormRegister;
