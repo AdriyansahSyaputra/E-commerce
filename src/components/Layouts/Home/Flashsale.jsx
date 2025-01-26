@@ -38,13 +38,22 @@ const products = [
     sold: "30/80",
     reviews: 90,
   },
+  {
+    id: 5,
+    name: "Tablet",
+    discount: "-25%",
+    price: "$250",
+    originalPrice: "$349",
+    sold: "40/100",
+    reviews: 120,
+  },
 ];
 
 const Flashsale = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [visibleProducts, setVisibleProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [countdown, setCountdown] = useState({
     days: 3,
     hours: 0,
@@ -96,21 +105,18 @@ const Flashsale = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Handle window resize and set number of visible products
+  // Resize handling
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Update visible products whenever screen size or currentSlide changes
+  // Visible products and slide management
   useEffect(() => {
     const itemsToShow = isMobile ? 2 : 3;
     const maxStartIndex = products.length - itemsToShow;
@@ -118,12 +124,9 @@ const Flashsale = () => {
     if (currentSlide > maxStartIndex) {
       setCurrentSlide(maxStartIndex);
     }
+  }, [currentSlide, isMobile]);
 
-    setVisibleProducts(
-      products.slice(currentSlide, currentSlide + itemsToShow)
-    );
-  }, [currentSlide, isMobile, products]);
-
+  // Slide navigation
   const handlePrevSlide = () => {
     const itemsToShow = isMobile ? 2 : 3;
     setCurrentSlide((prev) =>
@@ -136,6 +139,11 @@ const Flashsale = () => {
     setCurrentSlide((prev) =>
       prev >= products.length - itemsToShow ? 0 : prev + 1
     );
+  };
+
+  const getItemWidth = () => {
+    if (isMobile) return 50; // 2 columns
+    return 33.33; // 3 columns
   };
 
   const padNumber = (num) => String(num).padStart(2, "0");
@@ -180,7 +188,7 @@ const Flashsale = () => {
         <div className="flex flex-col lg:flex-row gap-6 mt-6">
           {/* Promo Banner */}
           <div className="lg:w-1/3 bg-blue-600 text-white p-8 rounded-lg flex flex-col justify-center">
-            <div className="text-3xl font-bold mb-4">HURRY UP</div>
+            <h1 className="text-3xl font-bold mb-4">HURRY UP</h1>
             <div className="flex items-baseline gap-1">
               <span className="text-2xl">SAVE UP TO</span>
               <span className="text-7xl font-bold">80%</span>
@@ -192,57 +200,64 @@ const Flashsale = () => {
           </div>
 
           {/* Product Cards Container */}
-          <div className="lg:w-2/3 relative">
+          <div className="lg:w-2/3 relative ">
             {/* Product Cards Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {visibleProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-lg shadow-md p-4"
-                >
-                  <div className="bg-red-500 text-white text-sm px-2 py-0.5 rounded w-fit mb-2">
-                    {product.discount}
-                  </div>
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-300"
+                style={{
+                  transform: `translateX(-${currentSlide * getItemWidth()}%)`,
+                }}
+              >
+                {products.map((product) => (
+                  <div
+                    key={product.id}
+                    className="bg-white rounded-lg shadow-md p-4 w-1/2 md:w-1/3 flex-shrink-0 px-2"
+                  >
+                    <div className="bg-red-500 text-white text-sm px-2 py-0.5 rounded w-fit mb-2">
+                      {product.discount}
+                    </div>
 
-                  <div className="relative mb-4">
-                    <img
-                      src="/api/placeholder/400/320"
-                      alt={product.name}
-                      className="w-full h-40 object-cover rounded-lg"
-                    />
-                    <button className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow hover:bg-gray-100">
-                      <Heart size={18} className="text-gray-400" />
+                    <div className="relative mb-4">
+                      <img
+                        src="/api/placeholder/400/320"
+                        alt={product.name}
+                        className="w-full h-40 object-cover rounded-lg"
+                      />
+                      <button className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow hover:bg-gray-100">
+                        <Heart size={18} className="text-gray-400" />
+                      </button>
+                    </div>
+                    <h3 className="font-medium text-sm mb-2 line-clamp-2">
+                      {product.name}
+                    </h3>
+                    <div className="flex flex-col md:flex-row md:items-center gap-1 mb-2">
+                      <div className="flex text-yellow-400">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i}>★</span>
+                        ))}
+                      </div>
+                      <span className="text-gray-500 text-xs md:text-sm">
+                        {product.reviews} reviews
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-blue-600 font-bold">
+                        {product.price}
+                      </span>
+                      <span className="text-gray-400 line-through text-sm">
+                        {product.originalPrice}
+                      </span>
+                    </div>
+                    <div className="text-sm text-gray-500 mb-4">
+                      Sold: {product.sold} products
+                    </div>
+                    <button className="w-full bg-blue-600 text-white py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                      Add To Cart
                     </button>
                   </div>
-                  <h3 className="font-medium text-sm mb-2 line-clamp-2">
-                    {product.name}
-                  </h3>
-                  <div className="flex flex-col md:flex-row md:items-center gap-1 mb-2">
-                    <div className="flex text-yellow-400">
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i}>★</span>
-                      ))}
-                    </div>
-                    <span className="text-gray-500 text-xs md:text-sm">
-                      {product.reviews} reviews
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-blue-600 font-bold">
-                      {product.price}
-                    </span>
-                    <span className="text-gray-400 line-through text-sm">
-                      {product.originalPrice}
-                    </span>
-                  </div>
-                  <div className="text-sm text-gray-500 mb-4">
-                    Sold: {product.sold} products
-                  </div>
-                  <button className="w-full bg-blue-600 text-white py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
-                    Add To Cart
-                  </button>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             {/* Navigation Arrows - Repositioned */}
