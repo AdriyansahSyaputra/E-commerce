@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Heart, Star, Check, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const CardProduct = ({ product }) => {
+  const navigate = useNavigate();
+
+  const handleCLick = () => {
+    navigate(`/product/${product.id}`, {
+      state: product,
+    });
+  };
+
   return (
-    <div className="p-4 rounded-md bg-white h-full flex flex-col">
+    <div
+      onClick={handleCLick}
+      className="p-4 rounded-md bg-white h-full flex flex-col cursor-pointer"
+    >
       <div className="relative mb-4">
         <img
           src="/public/img/category/laptop.png"

@@ -6,7 +6,17 @@ const BlogsSection = ({ articles }) => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <CardBlog articles={articles} />
+        {articles.map((article) => (
+          <CardBlog
+            key={article.id}
+            title={article.title}
+            content={article.content}
+            category={article.category}
+            date={article.date}
+            author={article.author}
+            slug={article.slug}
+          />
+        ))}
       </div>
     </>
   );
@@ -15,5 +25,5 @@ const BlogsSection = ({ articles }) => {
 export default BlogsSection;
 
 BlogsSection.propTypes = {
-  articles: PropTypes.array.isRequired,
+  articles: PropTypes.array,
 };

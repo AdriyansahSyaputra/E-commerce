@@ -1,7 +1,16 @@
 import React from "react";
 import PropsTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const TrendingBlog = ({ articles }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (articles) => {
+    navigate(`/blog/${articles.slug}`, {
+      state: articles,
+    });
+  }
+
   return (
     <aside className="min-w-80 p-4 mb-10 md:mb-0">
       {/* Header */}
@@ -17,6 +26,7 @@ const TrendingBlog = ({ articles }) => {
           .map((article) => (
             <article
               key={article.id}
+              onClick={() => handleClick(article)}
               className="group cursor-pointer hover:bg-slate-50 rounded-lg transition-colors duration-200 p-2"
             >
               <div className="flex gap-4">
