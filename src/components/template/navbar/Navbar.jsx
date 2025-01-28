@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Menu, X, Search, ShoppingCart, Bell, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,12 +54,17 @@ const Navbar = () => {
               </a>
 
               <div className="hidden lg:flex space-x-2">
-                <button className="px-3 py-2 border border-teal-500 text-teal-500 rounded-md text-sm font-semibold hover:bg-teal-50">
-                  Login
-                </button>
-                <button className="px-3 py-2 bg-teal-500 text-white rounded-md text-sm font-semibold hover:bg-teal-600">
-                  Register
-                </button>
+                <Link to="/login">
+                  <button className="px-3 py-2 border border-teal-500 text-teal-500 rounded-md text-sm font-semibold hover:bg-teal-50">
+                    Login
+                  </button>
+                </Link>
+
+                <Link to="/register">
+                  <button className="px-3 py-2 bg-teal-500 text-white rounded-md text-sm font-semibold hover:bg-teal-600">
+                    Register
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

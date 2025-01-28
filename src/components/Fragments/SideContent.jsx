@@ -43,7 +43,7 @@ const SideContent = ({ rounded, title, subHeading }) => {
 export default SideContent;
 
 SideContent.propTypes = {
-  rounded: PropsTypes.element,
+  rounded: PropsTypes.string,
   title: PropsTypes.string,
   subHeading: PropsTypes.string,
 };

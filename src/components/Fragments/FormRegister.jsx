@@ -1,22 +1,80 @@
 import React, { useState } from "react";
 import { CircleUser, Lock, Eye, EyeOff, Phone } from "lucide-react";
 import InputLabel from "../Elements/Input/InputLabel";
+import { registerUser } from "../../services/authService";
 
 const FormRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [form, setForm] = useState({
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setErrorMessage("");
+  };
+  
+  // Validasi form
+  const validateForm = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10,15}$/;
+
+    if (!emailRegex.test(form.email.trim())) {
+      setErrorMessage("Invalid email format");
+      return false;
+    }
+
+    if (!phoneRegex.test(form.phone)) {
+      setErrorMessage("Phone number must contain 10-15 digits");
+      return false;
+    }
+
+    if (form.password.length < 8) {
+      setErrorMessage("Password must be at least 8 characters");
+      return false;
+    }
+
+    if (form.password !== form.confirmPassword) {
+      setErrorMessage("Password and Confirm Password must match");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+    try {
+      registerUser(form);
+      alert("Register success");
+      window.location.href = "/login";
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
 
   return (
     <>
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         {/* Email Input */}
         <div className="relative">
           <InputLabel
             icon={<CircleUser className="text-gray-400 w-5 h-5" />}
             type="text"
             id="email"
+            name="email"
             placeholder="Email / Phone"
             label="Email"
+            onChange={handleChange}
+            value={form.email}
+            required
           />
         </div>
 
@@ -26,8 +84,12 @@ const FormRegister = () => {
             icon={<Phone className="text-gray-400 w-5 h-5" />}
             type="text"
             id="phone"
+            name="phone"
             placeholder="Phone"
             label="Phone"
+            onChange={handleChange}
+            value={form.phone}
+            required
           />
         </div>
 
@@ -37,8 +99,12 @@ const FormRegister = () => {
             icon={<Lock className="text-gray-400 w-5 h-5" />}
             type={showPassword ? "text" : "password"}
             id="password"
+            name="password"
             placeholder="Password"
             label="Password"
+            onChange={handleChange}
+            value={form.password}
+            required
           />
           <button
             type="button"
@@ -55,8 +121,12 @@ const FormRegister = () => {
             icon={<Lock className="text-gray-400 w-5 h-5" />}
             type={showConfirmPassword ? "text" : "password"}
             id="confirmPassword"
+            name="confirmPassword"
             placeholder="Confirm Password"
             label="Confirm Password"
+            onChange={handleChange}
+            value={form.confirmPassword}
+            required
           />
           <button
             type="button"
@@ -66,6 +136,13 @@ const FormRegister = () => {
             {showConfirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
           </button>
         </div>
+
+        {/* Error message */}
+        {errorMessage && (
+          <p className="text-xs md:text-sm text-red-500 font-medium">
+            {errorMessage}
+          </p>
+        )}
 
         {/* Register Button */}
         <button
@@ -104,7 +181,7 @@ const FormRegister = () => {
           <p className="text-sm text-gray-600">
             Have an account?
             <a
-              href="#"
+              href="/login"
               className="ml-1 text-blue-600 font-semibold hover:underline"
             >
               Login

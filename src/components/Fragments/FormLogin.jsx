@@ -1,21 +1,46 @@
 import React, { useState } from "react";
 import { CircleUser, Lock, Eye, EyeOff } from "lucide-react";
 import InputLabel from "../Elements/Input/InputLabel";
+import { loginUser } from "../../services/authService";
 
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setErrorMessage("");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      loginUser(form.email, form.password);
+      alert("Login success");
+      window.location.href = "/";
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
 
   return (
     <>
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         {/* Email Input */}
         <div className="relative">
           <InputLabel
             icon={<CircleUser className="text-gray-400 w-5 h-5" />}
             type="text"
             id="email"
+            name="email"
             placeholder="Email / Phone"
             label="Email"
+            onChange={handleChange}
+            required
           />
         </div>
 
@@ -25,8 +50,11 @@ const FormLogin = () => {
             icon={<Lock className="text-gray-400 w-5 h-5" />}
             type={showPassword ? "text" : "password"}
             id="password"
+            name="password"
             placeholder="Password"
             label="Password"
+            onChange={handleChange}
+            required
           />
           <button
             type="button"
@@ -37,15 +65,18 @@ const FormLogin = () => {
           </button>
         </div>
 
+        {/* Error message */}
+        {errorMessage && (
+          <p className="text-xs md:text-sm text-red-500 font-medium">
+            {errorMessage}
+          </p>
+        )}
+
         {/* Forgot Password */}
         <div className="flex justify-between">
           {/* Remember Me */}
           <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="rememberMe"
-              className="mr-2"
-            ></input>
+            <input type="checkbox" id="rememberMe" className="mr-2"></input>
             <label htmlFor="rememberMe" className="text-sm text-gray-600">
               Remember Me
             </label>
@@ -92,7 +123,10 @@ const FormLogin = () => {
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
             Don{"'"}t have an account?{" "}
-            <a href="#" className="text-blue-600 font-semibold hover:underline">
+            <a
+              href="/register"
+              className="text-blue-600 font-semibold hover:underline"
+            >
               Sign Up
             </a>
           </p>
