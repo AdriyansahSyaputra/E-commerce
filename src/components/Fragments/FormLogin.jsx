@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { CircleUser, Lock, Eye, EyeOff } from "lucide-react";
 import InputLabel from "../Elements/Input/InputLabel";
 import { loginUser } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -21,7 +23,7 @@ const FormLogin = () => {
     try {
       loginUser(form.email, form.password);
       alert("Login success");
-      window.location.href = "/";
+      navigate("/");
     } catch (error) {
       setErrorMessage(error.message);
     }

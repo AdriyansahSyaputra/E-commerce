@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { CircleUser, Lock, Eye, EyeOff, Phone } from "lucide-react";
 import InputLabel from "../Elements/Input/InputLabel";
 import { registerUser } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
+import Alert from "./Alert";
 
 const FormRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const [alert, setAlert] = useState(false);
   const [form, setForm] = useState({
     email: "",
     phone: "",
@@ -18,7 +22,7 @@ const FormRegister = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrorMessage("");
   };
-  
+
   // Validasi form
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -53,8 +57,12 @@ const FormRegister = () => {
     if (!validateForm()) return;
     try {
       registerUser(form);
-      alert("Register success");
-      window.location.href = "/login";
+
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+        navigate("/login");
+      }, 2500);
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -62,6 +70,11 @@ const FormRegister = () => {
 
   return (
     <>
+      <Alert
+        isOpen={alert}
+        action="Register Success"
+        message="Register successfully, please login to your account now!"
+      />
       <form className="space-y-4" onSubmit={handleSubmit}>
         {/* Email Input */}
         <div className="relative">
