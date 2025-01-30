@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CircleUser, Lock, Eye, EyeOff, Phone } from "lucide-react";
+import { CircleUser, Lock, Eye, EyeOff, Phone, Mail } from "lucide-react";
 import InputLabel from "../Elements/Input/InputLabel";
 import { registerUser } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ const FormRegister = () => {
   const [alert, setAlert] = useState(false);
   const [form, setForm] = useState({
     email: "",
+    username: "",
     phone: "",
     password: "",
     confirmPassword: "",
@@ -76,10 +77,25 @@ const FormRegister = () => {
         message="Register successfully, please login to your account now!"
       />
       <form className="space-y-4" onSubmit={handleSubmit}>
-        {/* Email Input */}
+        {/* Username Input */}
         <div className="relative">
           <InputLabel
             icon={<CircleUser className="text-gray-400 w-5 h-5" />}
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Full Name"
+            label="Full Name"
+            onChange={handleChange}
+            value={form.username}
+            required
+          />
+        </div>
+
+        {/* Email Input */}
+        <div className="relative">
+          <InputLabel
+            icon={<Mail className="text-gray-400 w-5 h-5" />}
             type="text"
             id="email"
             name="email"

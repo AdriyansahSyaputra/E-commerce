@@ -18,7 +18,7 @@ export const registerUser = (user) => {
   }
 
   // Simpan new user
-  const newUser = { email: user.email, password: user.password, phone: user.phone };  
+  const newUser = { username: user.username ,email: user.email, password: user.password, phone: user.phone };  
   localStorage.setItem("users", JSON.stringify([...users, newUser]));
 };
 
