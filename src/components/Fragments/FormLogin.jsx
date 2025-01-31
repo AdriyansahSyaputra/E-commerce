@@ -22,7 +22,6 @@ const FormLogin = () => {
     e.preventDefault();
     try {
       loginUser(form.email, form.password);
-      alert("Login success");
       navigate("/");
     } catch (error) {
       setErrorMessage(error.message);

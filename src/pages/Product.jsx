@@ -3,7 +3,7 @@ import Navbar from "../components/template/navbar/Navbar";
 import Footer from "../components/template/footer/footer";
 import PromoBanner from "../components/Layouts/Product/PromoBanner";
 import ProductView from "../components/Layouts/Product/ProductView";
-import FilterCategories from "../components/Layouts/Product/FilterCategories";
+import FilterCategories from "../components/Fragments/FilterCategories";
 import products from "../utils/products";
 
 const categories = [
@@ -43,7 +43,15 @@ const Product = () => {
       <Navbar />
       <PromoBanner />
       <main className="md:flex md:px-10 gap-6 my-10">
-        <FilterCategories selectedCategories={selectedCategories} handleCheckboxChange={handleCheckboxChange} categories={categories} isOpen={isOpen} setIsOpen={setIsOpen} handleClearAll={handleClearAll} handleApplyFilters={handleApplyFilters} />
+        <FilterCategories
+          selectedCategories={selectedCategories}
+          handleCheckboxChange={handleCheckboxChange}
+          categories={categories}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          handleClearAll={handleClearAll}
+          handleApplyFilters={handleApplyFilters}
+        />
         <ProductView products={products} />
       </main>
       <Footer />

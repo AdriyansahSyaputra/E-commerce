@@ -10,6 +10,7 @@ import RegisterPage from './pages/RegisterPage'
 import BlogDetail from './pages/BlogDetail'
 import ScrollToTop from './hooks/ScrollToTop'
 import ProductDetail from './pages/ProductDetail'
+import SearchPage from './pages/SearchPage'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/blog/:slug' element={<BlogDetail />}></Route>
           <Route path='/login' element={<LoginPage />}></Route>
           <Route path='/register' element={<RegisterPage />}></Route>
+          <Route path='/search' element={<SearchPage />}></Route>
         </Routes>
       </Router>
     </>

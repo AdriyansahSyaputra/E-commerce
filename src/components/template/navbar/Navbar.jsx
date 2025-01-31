@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, Search, ShoppingCart, Bell, Mail, ChevronDown, Settings, LogOut, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -21,6 +23,13 @@ const Navbar = () => {
     { title: "Blog", link: "/blogs" },
     { title: "Contact", link: "/contact" },
   ];
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if(query.trim()) {
+      navigate(`/search?query=${query}`);
+    }
+  }
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -45,11 +54,13 @@ const Navbar = () => {
 
             {/* Search Input */}
             <div className="flex-grow max-w-xl mx-4 hidden lg:block">
-              <form action="">
+              <form action="" onSubmit={handleSearch}>
                 <div className="relative">
                   <input
                     type="text"
                     placeholder="Search products..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
                     className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                   <button
