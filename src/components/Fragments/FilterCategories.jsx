@@ -40,8 +40,15 @@ const FilterCategories = ({
           </button>
           <span className="text-sm font-medium text-gray-600">
             {selectedCategories.length > 0
-              ? `${selectedCategories.length} selected`
-              : "55 Products"}
+              ? `${categories
+                  .filter((category) =>
+                    selectedCategories.includes(category.name)
+                  )
+                  .reduce((sum, category) => sum + category.count, 0)} Products`
+              : `${categories.reduce(
+                  (sum, category) => sum + category.count,
+                  0
+                )} Products`}
           </span>
         </div>
       </div>

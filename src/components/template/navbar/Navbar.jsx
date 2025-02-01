@@ -1,5 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X, Search, ShoppingCart, Bell, Mail, ChevronDown, Settings, LogOut, User } from "lucide-react";
+import {
+  Menu,
+  X,
+  Search,
+  ShoppingCart,
+  Bell,
+  Mail,
+  ChevronDown,
+  Settings,
+  LogOut,
+  User,
+  House,
+  Box,
+  Info,
+  ScrollText,
+  SquareUserRound,
+  Heart,
+} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -17,19 +34,25 @@ const Navbar = () => {
   }, []);
 
   const menuItems = [
-    { title: "Home", link: "/" },
-    { title: "Product", link: "/product" },
-    { title: "About", link: "/about" },
-    { title: "Blog", link: "/blogs" },
-    { title: "Contact", link: "/contact" },
+    { title: "Home", icon: <House />, link: "/" },
+    { title: "Product", icon: <Box />, link: "/product" },
+    { title: "About", icon: <Info />, link: "/about" },
+    { title: "Blog", icon: <ScrollText />, link: "/blogs" },
+    { title: "Contact", icon: <SquareUserRound />, link: "/contact" },
+  ];
+
+  const accountMenu = [
+    { title: "Profile", icon: <User />, link: "/profile" },
+    { title: "Settings", icon: <Settings />, link: "/settings" },
+    { title: "Wishlist", icon: <Heart />, link: "/wishlist" },
   ];
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if(query.trim()) {
+    if (query.trim()) {
       navigate(`/search?query=${query}`);
     }
-  }
+  };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -225,21 +248,12 @@ const Navbar = () => {
 
           {/* Mobile Navigation Bottom Sheet */}
           <div
-            className={`fixed inset-x-0 bottom-0 bg-white shadow-lg transform ${
-              isOpen ? "translate-y-0" : "translate-y-full"
+            className={`fixed inset-x-0 bottom-0 top-0 bg-white transform max-h-full ${
+              isOpen ? "translate-x-0" : "translate-x-full"
             } transition-transform duration-300 ease-in-out lg:hidden z-50`}
-            style={{
-              maxHeight: "70vh",
-              borderTopLeftRadius: "20px",
-              borderTopRightRadius: "20px",
-            }}
           >
-            {/* Handle bar */}
-            <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mt-3"></div>
-
             {/* Mobile Menu Header */}
-            <div className="flex justify-between items-center px-6 py-4">
-              <span className="font-semibold text-xl text-amber-500">Menu</span>
+            <div className="flex justify-end items-center px-6 py-4">
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-gray-600 hover:text-amber-500"
@@ -248,33 +262,96 @@ const Navbar = () => {
               </button>
             </div>
 
-            {/* Mobile Menu Items */}
-            <div
-              className="px-6 py-4 overflow-y-auto"
-              style={{ maxHeight: "calc(70vh - 100px)" }}
-            >
-              <div className="space-y-6">
-                {menuItems.map((item) => (
-                  <a
-                    key={item.title}
-                    href={item.link}
-                    className="flex items-center text-lg font-medium text-gray-700 hover:text-amber-500"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.title}
-                  </a>
-                ))}
-
-                {/* Auth Buttons */}
-                <div className="flex flex-col space-y-3 pt-6">
-                  <button className="w-full px-4 py-3 border border-teal-500 text-teal-500 rounded-lg font-semibold hover:bg-teal-50">
-                    Login
-                  </button>
-                  <button className="w-full px-4 py-3 bg-teal-500 text-white rounded-lg font-semibold hover:bg-teal-600">
-                    Register
-                  </button>
+            {/* Profile Account */}
+            {user ? (
+              <div className="flex items-center space-x-4 px-6 py-4 border-b border-gray-200">
+                <img
+                  src="/img/default.jpg"
+                  alt="Profile"
+                  className="w-10 h-10 rounded-lg object-cover border-2 border-gray-300 group-hover:border-blue-500"
+                />
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">
+                    {user.username || "Guest"}
+                  </p>
+                  <p className="text-xs text-gray-500">{user.email}</p>
                 </div>
               </div>
+            ) : (
+              <div className="lg:block px-6 border-b border-gray-200 pb-4">
+                <Link to="/login">
+                  <button className="px-3 py-2 bg-teal-500 text-slate-100 rounded-md text-sm font-semibold hover:bg-teal-600">
+                    Login
+                  </button>
+                </Link>
+              </div>
+            )}
+
+            {/* Mobile Menu Items */}
+            <div
+              className="py-4 h-full"
+              style={{ maxHeight: "calc(70vh - 100px)" }}
+            >
+              {/* Menu Items */}
+              <div className="px-6">
+                <h2 className="text-lg font-semibold text-gray-700 mb-2">
+                  Menu
+                </h2>
+                {menuItems.map((item) => (
+                  <div
+                    key={item.title}
+                    className="flex items-center py-2 hover:bg-gray-100 space-x-4"
+                  >
+                    <span className="w-5 h-5 text-gray-500">{item.icon}</span>
+                    <a
+                      href={item.link}
+                      className="text-slate-600 hover:text-amber-500 text-base font-medium"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.title}
+                    </a>
+                  </div>
+                ))}
+              </div>
+
+              {/* Account menu */}
+              {user && (
+                <div className="px-6 border-t border-gray-200 py-4 mt-4">
+                  <h2 className="text-lg font-semibold text-gray-700 mb-2">
+                    Account
+                  </h2>
+                  {accountMenu.map((item) => (
+                    <div
+                      key={item.title}
+                      className="flex items-center py-2 hover:bg-gray-100 space-x-4"
+                    >
+                      <span className="w-5 h-5 text-gray-500">{item.icon}</span>
+                      <a
+                        href={item.link}
+                        className="text-slate-600 hover:text-amber-500 text-base font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item.title}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Logout Button */}
+              {user && (
+                <div className="bottom-0 px-6 absolute w-full border-t border-gray-200">
+                  <button
+                    className="w-full flex items-center space-x-4 py-2 hover:bg-gray-100 my-4"
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={20} />
+                    <span className="text-slate-600 hover:text-red-500 text-base font-medium">
+                      Logout
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

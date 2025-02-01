@@ -1,25 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Navbar from "../components/template/navbar/Navbar";
 import Footer from "../components/template/footer/footer";
 import PromoBanner from "../components/Layouts/Product/PromoBanner";
 import ProductView from "../components/Layouts/Product/ProductView";
 import FilterCategories from "../components/Fragments/FilterCategories";
 import products from "../utils/products";
-
-const categories = [
-  { id: 1, name: "smartphone", count: 15 },
-  { id: 2, name: "laptop/computer", count: 12 },
-  { id: 3, name: "headphones", count: 8 },
-  { id: 4, name: "tablet", count: 10 },
-  { id: 5, name: "television", count: 6 },
-  { id: 6, name: "gamepad/console", count: 9 },
-  { id: 7, name: "tools", count: 14 },
-  { id: 8, name: "smartwatch", count: 7 },
-];
+import categories from "../utils/categories";
 
 const Product = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(products);
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleCheckboxChange = (categoryId) => {
     setSelectedCategories((prev) =>
@@ -31,12 +23,49 @@ const Product = () => {
 
   const handleClearAll = () => {
     setSelectedCategories([]);
+    setFilteredProducts(products);
   };
 
-  const handleApplyFilters = () => {
+  const handleApplyFilters = useCallback(() => {
     setIsOpen(false);
-    // Logic for applying filters can be added here.
-  };
+
+    // Filter produk berdasarkan kategori
+    if (selectedCategories.length === 0) {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter((product) =>
+        selectedCategories.some(
+          (category) =>
+            category.toLowerCase() === product.category.toLowerCase()
+        )
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [selectedCategories]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Memeriksa lebar layar untuk menentukan apakah mobile atau desktop
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Menambahkan event listener ketika ukuran layar berubah
+    window.addEventListener("resize", handleResize);
+
+    // Panggil handleResize agar langsung mengetahui keadaan awal
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Jika di desktop, filter langsung diterapkan ketika kategori dipilih
+    if (!isMobile) {
+      handleApplyFilters();
+    }
+  }, [selectedCategories, isMobile, handleApplyFilters]);
 
   return (
     <>
@@ -52,7 +81,7 @@ const Product = () => {
           handleClearAll={handleClearAll}
           handleApplyFilters={handleApplyFilters}
         />
-        <ProductView products={products} />
+        <ProductView products={filteredProducts} />
       </main>
       <Footer />
     </>

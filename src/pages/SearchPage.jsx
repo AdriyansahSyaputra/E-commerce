@@ -3,19 +3,9 @@ import Navbar from "../components/template/navbar/Navbar";
 import Footer from "../components/template/footer/footer";
 import SearchResult from "../components/Layouts/Search/SearchResult";
 import FilterCategories from "../components/Fragments/FilterCategories";
+import { useLocation} from "react-router-dom";
 import products from "../utils/products";
-import { useLocation, useNavigate } from "react-router-dom";
-
-const categories = [
-  { id: 1, name: "smartphone", count: 15 },
-  { id: 2, name: "laptop/computer", count: 12 },
-  { id: 3, name: "headphones", count: 8 },
-  { id: 4, name: "tablet", count: 10 },
-  { id: 5, name: "television", count: 6 },
-  { id: 6, name: "gamepad/console", count: 9 },
-  { id: 7, name: "tools", count: 14 },
-  { id: 8, name: "smartwatch", count: 7 },
-];
+import categories from "../utils/categories";
 
 const SearchPage = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
