@@ -8,14 +8,27 @@ import {
   CreditCard,
   MessageCircleMore,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../../contexts/cartContext";
 
 const Details = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const storedUser = sessionStorage.getItem("token");
 
   const { name, description, category, reviews, rating, price, sold, stock } =
     location.state;
 
   const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    if (storedUser) {
+      addToCart(location.state);
+    } else {
+      navigate("/login");
+    }
+  }
 
   const handleIncrease = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -135,7 +148,7 @@ const Details = () => {
 
           {/* Add to Cart & Checkout Button */}
           <div className="hidden md:flex items-center gap-2 mt-4 w-full md:w-1/2">
-            <button className="p-3 w-full rounded-md bg-amber-500 hover:bg-amber-600 transition-all duration-200 flex items-center gap-2">
+            <button onClick={handleAddToCart} className="p-3 w-full rounded-md bg-amber-500 hover:bg-amber-600 transition-all duration-200 flex items-center gap-2">
               <ShoppingCart className="w-5 h-5 text-white" />
               <span className="text-sm font-medium text-white">
                 Add to Cart

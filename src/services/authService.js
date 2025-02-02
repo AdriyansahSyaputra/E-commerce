@@ -31,7 +31,8 @@ export const loginUser = (email, password) => {
   const token = uuidv4();
 
   if (user) {
-    sessionStorage.setItem("user", JSON.stringify({ ...user, token }));
+    sessionStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem("token", JSON.stringify(token));
     return user;
   } else {
     throw new Error("Invalid email or password");

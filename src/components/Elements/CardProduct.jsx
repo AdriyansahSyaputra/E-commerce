@@ -2,9 +2,21 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Heart, Star, Check, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../contexts/cartContext";
 
 const CardProduct = ({ product }) => {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const storedUser = sessionStorage.getItem("token");
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    if (storedUser) {
+      addToCart(product);
+    } else {
+      navigate("/login");
+    }
+  };
 
   const handleCLick = () => {
     navigate(`/product/${product.id}`, {
@@ -61,7 +73,10 @@ const CardProduct = ({ product }) => {
         )}
       </div>
 
-      <button className="w-full bg-blue-600 text-white py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-all duration-200">
+      <button
+        onClick={handleAddToCart}
+        className="w-full bg-blue-600 text-white py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-all duration-200"
+      >
         Add To Cart
       </button>
     </div>

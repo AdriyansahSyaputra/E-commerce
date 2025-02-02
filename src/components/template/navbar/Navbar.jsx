@@ -18,6 +18,8 @@ import {
   Heart,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../../../contexts/cartContext";
+import CartResultDesktop from "../../Layouts/Cart/CartResultDesktop";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +27,9 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const { cart } = useCart();
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -97,18 +102,35 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Cart and Auth */}
-            <div className="hidden lg:flex items-center space-x-10">
-              <a
-                href="/cart"
-                className="text-slate-700 hover:text-amber-500 hidden lg:flex items-center"
+            <div className="hidden lg:flex items-center space-x-10 ">
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="text-slate-700 hover:text-amber-500 hidden lg:flex items-center relative"
               >
                 <ShoppingCart size={20} />
-              </a>
-              <button className="text-gray-600 hover:text-amber-500">
-                <Mail size={20} />
+
+                {/* Badge for Cart */}
+                {cart.length > 0 && (
+                  <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-amber-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                    {cart.length}
+                  </span>
+                )}
               </button>
-              <button className="text-gray-600 hover:text-amber-500">
+              <button className="text-gray-600 hover:text-amber-500 relative">
+                <Mail size={20} />
+
+                {/* Badge for Messages */}
+                <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-amber-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                  0
+                </span>
+              </button>
+              <button className="text-gray-600 hover:text-amber-500 relative">
                 <Bell size={20} />
+
+                {/* Badge for Notifications */}
+                <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-amber-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                  0
+                </span>
               </button>
             </div>
 
@@ -356,6 +378,11 @@ const Navbar = () => {
           </div>
         </div>
       </header>
+
+      <CartResultDesktop
+        isCartOpen={isCartOpen}
+        setIsCartOpen={setIsCartOpen}
+      />
     </>
   );
 };
