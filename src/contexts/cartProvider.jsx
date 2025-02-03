@@ -52,15 +52,12 @@ export const CartProvider = ({ children }) => {
 
   const updateQuantity = (id, quantity) => {
     setCart((prevCart) => {
-      if (quantity === 1) {
+      if (quantity < 1) {
         return prevCart.filter((item) => item.id !== id);
       }
-      return prevCart.map((item) => {
-        if (item.id === id) {
-          return { ...item, quantity };
-        }
-        return item;
-      });
+      return prevCart.map((item) =>
+        item.id === id ? { ...item, quantity } : item
+      );
     });
   };
 

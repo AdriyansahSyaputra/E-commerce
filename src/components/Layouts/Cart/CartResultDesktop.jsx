@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { X, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { useCart } from "../../../contexts/cartContext";
 import PropTypes from "prop-types";
 
-const CartResultDesktop = ({ isCartOpen,setIsCartOpen }) => {
-  const [quantity, setQuantity] = useState(1);
-  const { cart, removeFromCart, updateQuantity } = useCart();
+const CartResultDesktop = ({ isCartOpen, setIsCartOpen }) => {
+  const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
 
   const totalPrice = cart.reduce(
-    (acc, item) => acc + (item.price || 0) * (item.quantity || 0),
+    (acc, item) => acc + item.price * item.quantity,
     0
   );
-
-  const handleIncrease = () => setQuantity((prev) => prev + 1);
-  const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   return (
     <>
@@ -73,16 +69,20 @@ const CartResultDesktop = ({ isCartOpen,setIsCartOpen }) => {
                         <span className="text-sm text-gray-600">Quantity:</span>
                         <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-1">
                           <button
-                            onClick={handleDecrease}
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
                             className="p-1 hover:bg-white rounded-md transition-colors duration-200"
                           >
                             <Minus className="w-4 h-4 text-gray-600" />
                           </button>
                           <span className="w-8 text-center font-medium text-gray-800">
-                            {quantity}
+                            {item.quantity}
                           </span>
                           <button
-                            onClick={handleIncrease}
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
                             className="p-1 hover:bg-white rounded-md transition-colors duration-200"
                           >
                             <Plus className="w-4 h-4 text-gray-600" />
@@ -116,7 +116,7 @@ const CartResultDesktop = ({ isCartOpen,setIsCartOpen }) => {
               </span>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <button className="px-4 py-2.5 rounded-lg text-indigo-600 bg-indigo-50 hover:bg-indigo-100 font-medium transition-colors duration-200">
+              <button onClick={clearCart} className="px-4 py-2.5 rounded-lg text-indigo-600 bg-indigo-50 hover:bg-indigo-100 font-medium transition-colors duration-200">
                 Clear Cart
               </button>
               <button className="px-4 py-2.5 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 font-medium transition-colors duration-200">
@@ -141,6 +141,6 @@ const CartResultDesktop = ({ isCartOpen,setIsCartOpen }) => {
 export default CartResultDesktop;
 
 CartResultDesktop.propTypes = {
-    setIsCartOpen: PropTypes.func.isRequired,
-    isCartOpen: PropTypes.bool.isRequired
-}
+  setIsCartOpen: PropTypes.func.isRequired,
+  isCartOpen: PropTypes.bool.isRequired,
+};

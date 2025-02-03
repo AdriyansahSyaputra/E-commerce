@@ -232,14 +232,35 @@ const Navbar = () => {
 
             {/* Mobile Icons */}
             <div className="flex items-center space-x-4">
-              <button className="text-gray-600 hover:text-amber-500">
-                <Mail size={20} />
-              </button>
-              <button className="text-gray-600 hover:text-amber-500">
-                <Bell size={20} />
-              </button>
-              <button className="text-gray-600 hover:text-amber-500">
+              <Link to="/cart">
+              <button
+                className="text-slate-700 hover:text-amber-500 items-center relative"
+              >
                 <ShoppingCart size={20} />
+
+                {/* Badge for Cart */}
+                {cart.length > 0 && (
+                  <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-amber-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                    {cart.length}
+                  </span>
+                )}
+              </button>
+              </Link>
+              <button className="text-gray-600 hover:text-amber-500 relative">
+                <Mail size={20} />
+
+                {/* Badge for Messages */}
+                <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-amber-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                  0
+                </span>
+              </button>
+              <button className="text-gray-600 hover:text-amber-500 relative">
+                <Bell size={20} />
+
+                {/* Badge for Notifications */}
+                <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-amber-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                  0
+                </span>
               </button>
               <button
                 className="text-gray-600 hover:text-amber-500"
@@ -249,24 +270,6 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-
-          {/* Line Divider */}
-          <div className="border-t hidden lg:block border-gray-200 mt-4"></div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex mt-2 ">
-            <div className="mx-auto flex space-x-8 items-center">
-              {menuItems.map((item) => (
-                <a
-                  href={item.link}
-                  key={item.title}
-                  className="text-slate-700 hover:text-amber-500 text-base font-medium"
-                >
-                  {item.title}
-                </a>
-              ))}
-            </div>
-          </nav>
 
           {/* Mobile Navigation Bottom Sheet */}
           <div
