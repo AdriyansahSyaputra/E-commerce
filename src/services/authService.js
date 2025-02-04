@@ -18,7 +18,13 @@ export const registerUser = (user) => {
   }
 
   // Simpan new user
-  const newUser = { username: user.username ,email: user.email, password: user.password, phone: user.phone };  
+  const newUser = {
+    username: user.username,
+    email: user.email,
+    password: user.password,
+    phone: user.phone,
+    profilePicture: "default.jpg",
+  };
   localStorage.setItem("users", JSON.stringify([...users, newUser]));
 };
 
@@ -45,4 +51,37 @@ export const logoutUser = () => {
 
 export const getCurrentUser = () => {
   return JSON.parse(sessionStorage.getItem("token"));
+};
+
+// Update data user (username, password, phone, dan foto)
+export const updateUser = (updatedUser) => {
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  const currentUser = JSON.parse(sessionStorage.getItem("user"));
+
+  if (!currentUser) {
+    throw new Error("No user is logged in");
+  }
+
+  const userIndex = users.findIndex((user) => user.email === currentUser.email);
+  if (userIndex === -1) {
+    throw new Error("User not found");
+  }
+
+  // Update data user
+  const updatedData = {
+    ...users[userIndex],
+    username: updatedUser.username || users[userIndex].username,
+    password: updatedUser.password || users[userIndex].password,
+    phone: updatedUser.phone || users[userIndex].phone,
+    profilePicture:
+      updatedUser.profilePicture || users[userIndex].profilePicture,
+  };
+
+  users[userIndex] = updatedData;
+
+  // Simpan perubahan ke Local Storage
+  localStorage.setItem("users", JSON.stringify(users));
+
+  // Update sesi user yang sedang login
+  sessionStorage.setItem("user", JSON.stringify(updatedData));
 };

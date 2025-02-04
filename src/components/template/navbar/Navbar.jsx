@@ -141,7 +141,7 @@ const Navbar = () => {
                   className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded-lg transition-all duration-300"
                 >
                   <img
-                    src="/img/default.jpg"
+                    src={user.profilePicture || "default.jpg"}
                     alt="Profile"
                     className="w-10 h-10 rounded-full object-cover border-2 border-gray-300 group-hover:border-blue-500"
                   />
@@ -211,6 +211,24 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* Line Divider */}
+          <div className="border-t hidden lg:block border-gray-200 mt-4"></div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex mt-2 ">
+            <div className="mx-auto flex space-x-8 items-center">
+              {menuItems.map((item) => (
+                <a
+                  href={item.link}
+                  key={item.title}
+                  className="text-slate-700 hover:text-amber-500 text-base font-medium"
+                >
+                  {item.title}
+                </a>
+              ))}
+            </div>
+          </nav>
+
           {/* Mobile View */}
           <div className="lg:hidden flex items-center justify-between mt-4 px-4 lg:px-10">
             {/* Search Input */}
@@ -233,18 +251,16 @@ const Navbar = () => {
             {/* Mobile Icons */}
             <div className="flex items-center space-x-4">
               <Link to="/cart">
-              <button
-                className="text-slate-700 hover:text-amber-500 items-center relative"
-              >
-                <ShoppingCart size={20} />
+                <button className="text-slate-700 hover:text-amber-500 items-center relative">
+                  <ShoppingCart size={20} />
 
-                {/* Badge for Cart */}
-                {cart.length > 0 && (
-                  <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-amber-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
-                    {cart.length}
-                  </span>
-                )}
-              </button>
+                  {/* Badge for Cart */}
+                  {cart.length > 0 && (
+                    <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-amber-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+                      {cart.length}
+                    </span>
+                  )}
+                </button>
               </Link>
               <button className="text-gray-600 hover:text-amber-500 relative">
                 <Mail size={20} />
@@ -291,7 +307,7 @@ const Navbar = () => {
             {user ? (
               <div className="flex items-center space-x-4 px-6 py-4 border-b border-gray-200">
                 <img
-                  src="/img/default.jpg"
+                  src={user.profilePicture || "default.jpg"}
                   alt="Profile"
                   className="w-10 h-10 rounded-lg object-cover border-2 border-gray-300 group-hover:border-blue-500"
                 />

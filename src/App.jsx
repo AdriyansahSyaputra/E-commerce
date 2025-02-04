@@ -12,6 +12,7 @@ import ScrollToTop from './hooks/ScrollToTop'
 import ProductDetail from './pages/ProductDetail'
 import SearchPage from './pages/SearchPage'
 import CartResultMobile from './components/Layouts/Cart/CartResultMobile'
+import ProfileSetting from './components/Layouts/ProfileSetting/ProfileSetting'
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
           <Route path='/register' element={<RegisterPage />}></Route>
           <Route path='/search' element={<SearchPage />}></Route>
           <Route path='/cart' element={<CartResultMobile />}></Route>
+          <Route path='/profile' element={<ProfileSetting />}></Route>
         </Routes>
       </Router>
     </>
