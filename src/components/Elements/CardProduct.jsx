@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Heart, Star, Check, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../contexts/cartContext";
+import { useCart } from "../../contexts/cart/cartContext";
+import { useWishlist } from "../../contexts/wishlist/wishlistContext";
 
 const CardProduct = ({ product }) => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const storedUser = sessionStorage.getItem("token");
+
+  const [isInWishlist, setIsInWishlist] = useState(false);
+
+  useEffect(() => {
+    // Cek apakah item ada di wishlist
+    const isProductInWishlist = wishlist.some(
+      (wishlistItem) => wishlistItem.id === product.id
+    );
+    setIsInWishlist(isProductInWishlist);
+  }, [wishlist, product.id]);
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
@@ -18,15 +30,23 @@ const CardProduct = ({ product }) => {
     }
   };
 
-  const handleCLick = () => {
-    navigate(`/product/${product.id}`, {
-      state: product,
-    });
+  const handleToggleWishlist = (e) => {
+    e.stopPropagation();
+    if (!storedUser) {
+      navigate("/login");
+      return;
+    }
+
+    if (isInWishlist) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
   };
 
   return (
     <div
-      onClick={handleCLick}
+      onClick={() => navigate(`/product/${product.id}`, { state: product })}
       className="p-4 rounded-md bg-white h-full flex flex-col cursor-pointer"
     >
       <div className="relative mb-4">
@@ -35,8 +55,18 @@ const CardProduct = ({ product }) => {
           alt={product.name}
           className="w-full h-32 object-cover rounded-md"
         />
-        <button className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow hover:bg-gray-100 transition-all duration-200">
-          <Heart size={20} className="text-gray-400" />
+        <button
+          onClick={handleToggleWishlist}
+          className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow hover:bg-gray-100 transition-all duration-200"
+          disabled={isInWishlist} // Matikan tombol jika sudah di wishlist
+        >
+          <Heart
+            size={20}
+            fill={isInWishlist ? "red" : "none"}
+            className={`transition-colors duration-300 ${
+              isInWishlist ? "text-red-500" : "text-gray-400"
+            }`}
+          />
         </button>
       </div>
 

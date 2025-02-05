@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Minus, Plus, Trash2, Menu, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useCart } from "../../../contexts/cartContext";
+import { useCart } from "../../../contexts/cart/cartContext";
 
 const CartResultMobile = () => {
   const { cart, updateQuantity } = useCart();

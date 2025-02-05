@@ -9,7 +9,7 @@ import {
   MessageCircleMore,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../../contexts/cartContext";
+import { useCart } from "../../../contexts/cart/cartContext";
 
 const Details = () => {
   const location = useLocation();
@@ -28,7 +28,7 @@ const Details = () => {
     } else {
       navigate("/login");
     }
-  }
+  };
 
   const handleIncrease = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -132,15 +132,19 @@ const Details = () => {
           <div className="hidden md:flex items-center gap-2 mt-4 ">
             <p className="text-sm font-medium text-slate-700">Quantity:</p>
             <div className="flex items-center gap-2">
-              <button 
-              onClick={handleDecrease}
-              className="p-2 rounded-md bg-slate-100 hover:bg-slate-200 transition-all duration-200">
+              <button
+                onClick={handleDecrease}
+                className="p-2 rounded-md bg-slate-100 hover:bg-slate-200 transition-all duration-200"
+              >
                 <Minus className="w-4 h-4" />
               </button>
-              <span className="text-sm font-medium text-slate-700">{quantity}</span>
-              <button 
-              onClick={handleIncrease}
-              className="p-2 rounded-md bg-slate-100 hover:bg-slate-200 transition-all duration-200">
+              <span className="text-sm font-medium text-slate-700">
+                {quantity}
+              </span>
+              <button
+                onClick={handleIncrease}
+                className="p-2 rounded-md bg-slate-100 hover:bg-slate-200 transition-all duration-200"
+              >
                 <Plus className="w-4 h-4" />
               </button>
             </div>
@@ -148,7 +152,10 @@ const Details = () => {
 
           {/* Add to Cart & Checkout Button */}
           <div className="hidden md:flex items-center gap-2 mt-4 w-full md:w-1/2">
-            <button onClick={handleAddToCart} className="p-3 w-full rounded-md bg-amber-500 hover:bg-amber-600 transition-all duration-200 flex items-center gap-2">
+            <button
+              onClick={handleAddToCart}
+              className="p-3 w-full rounded-md bg-amber-500 hover:bg-amber-600 transition-all duration-200 flex items-center gap-2"
+            >
               <ShoppingCart className="w-5 h-5 text-white" />
               <span className="text-sm font-medium text-white">
                 Add to Cart

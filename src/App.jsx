@@ -13,6 +13,7 @@ import ProductDetail from './pages/ProductDetail'
 import SearchPage from './pages/SearchPage'
 import CartResultMobile from './components/Layouts/Cart/CartResultMobile'
 import ProfileSetting from './components/Layouts/ProfileSetting/ProfileSetting'
+import WishlistMobile from './components/Layouts/Wishlist/WishlistMobile'
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
           <Route path='/search' element={<SearchPage />}></Route>
           <Route path='/cart' element={<CartResultMobile />}></Route>
           <Route path='/profile' element={<ProfileSetting />}></Route>
+          <Route path='/wishlist' element={<WishlistMobile />}></Route>
         </Routes>
       </Router>
     </>

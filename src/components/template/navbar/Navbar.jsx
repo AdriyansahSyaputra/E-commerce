@@ -18,8 +18,9 @@ import {
   Heart,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useCart } from "../../../contexts/cartContext";
+import { useCart } from "../../../contexts/cart/cartContext";
 import CartResultDesktop from "../../Layouts/Cart/CartResultDesktop";
+import WishlistDesktop from "../../Layouts/Wishlist/WishlistDesktop";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +29,7 @@ const Navbar = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
   const { cart } = useCart();
 
@@ -184,6 +186,17 @@ const Navbar = () => {
                         >
                           <Settings className="w-4 h-4 mr-2" /> Settings
                         </a>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() => {
+                            setIsWishlistOpen(true);
+                            setIsDropdownOpen(false);
+                          }}
+                          className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        >
+                          <Heart className="w-4 h-4 mr-2" /> Wishlist
+                        </button>
                       </li>
                       <li>
                         <hr className="my-1 border-gray-200" />
@@ -401,6 +414,11 @@ const Navbar = () => {
       <CartResultDesktop
         isCartOpen={isCartOpen}
         setIsCartOpen={setIsCartOpen}
+      />
+
+      <WishlistDesktop
+        isWishlistOpen={isWishlistOpen}
+        setIsWishlistOpen={setIsWishlistOpen}
       />
     </>
   );
