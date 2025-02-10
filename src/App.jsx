@@ -11,9 +11,9 @@ import BlogDetail from './pages/BlogDetail'
 import ScrollToTop from './hooks/ScrollToTop'
 import ProductDetail from './pages/ProductDetail'
 import SearchPage from './pages/SearchPage'
-import CartResultMobile from './components/Layouts/Cart/CartResultMobile'
+import CartResultMobile from './pages/CartResultMobile'
 import ProfileSetting from './components/Layouts/ProfileSetting/ProfileSetting'
-import WishlistMobile from './components/Layouts/Wishlist/WishlistMobile'
+import WishlistMobile from './pages/WishlistMobile'
 
 function App() {
 
